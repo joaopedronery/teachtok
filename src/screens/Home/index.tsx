@@ -20,16 +20,14 @@ export default function Home() {
     ForYouResponse[] | []
   >([]);
   const getForYouItems = async () => {
-    var forYouItemsList = [];
-    for (var i = 0; i < 3; i++) {
-      var data = await getForYou();
-      const correctAnswers = await getCorrectAnswer(data.id);
-      data = {...data, correct_options: correctAnswers.correct_options};
-      forYouItemsList.push(data);
-    }
-    if (nextForYouItemsPage.length > 0) {
-      setForYouItems([...forYouItems, ...nextForYouItemsPage]);
-    } else {
+    if (nextForYouItemsPage.length === 0) {
+      var forYouItemsList = [];
+      for (var i = 0; i < 3; i++) {
+        var data = await getForYou();
+        const correctAnswers = await getCorrectAnswer(data.id);
+        data = {...data, correct_options: correctAnswers.correct_options};
+        forYouItemsList.push(data);
+      }
       setForYouItems(forYouItemsList);
     }
     getNextPage();
@@ -53,6 +51,7 @@ export default function Home() {
     <Container>
       <NavBar />
       <FlatList
+        onEndReachedThreshold={0.1}
         snapToAlignment="center"
         decelerationRate={'fast'}
         snapToInterval={Dimensions.get('screen').height - 103}
