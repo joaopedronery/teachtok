@@ -28,7 +28,6 @@ export default function Home() {
       forYouItemsList.push(data);
     }
     if (nextForYouItemsPage.length > 0) {
-      console.log('fodase');
       setForYouItems([...forYouItems, ...nextForYouItemsPage]);
     } else {
       setForYouItems(forYouItemsList);
@@ -42,7 +41,6 @@ export default function Home() {
       var data = await getForYou();
       const correctAnswers = await getCorrectAnswer(data.id);
       data = {...data, correct_options: correctAnswers.correct_options};
-      console.log(data);
       nextForYouItemsList.push(data);
     }
     setNextForYouItemsPage(nextForYouItemsList);
