@@ -65,13 +65,13 @@ export default function FeedItem({itemData}: {itemData: ForYouResponse}) {
           <PlusIcon name="plus-circle" size={18} color={theme.colors.green} />
         </AvatarContainer>
         {sideButtons.map(item => (
-          <IconAndDescriptionContainer>
+          <IconAndDescriptionContainer key={item.iconName}>
             <Icon name={item.iconName} color={theme.colors.white} size={28} />
             <SideButtonText>{item.text}</SideButtonText>
           </IconAndDescriptionContainer>
         ))}
       </SideButtonsContainer>
-      <AnswerOptions />
+      <AnswerOptions options={itemData.options} />
       <UsernameAndDescriptionContainer>
         <UsernameText>{itemData.user.name}</UsernameText>
         <DescriptionText>{itemData.description}</DescriptionText>
