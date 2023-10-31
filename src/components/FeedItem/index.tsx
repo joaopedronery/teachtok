@@ -24,12 +24,13 @@ import {
 } from './styles';
 
 //Types
+import {ForYouResponse} from '../../services/feedContent';
 type sideButtonsType = {
   iconName: string;
   text: string;
 }[];
 
-export default function FeedItem() {
+export default function FeedItem({itemData}: {itemData: ForYouResponse}) {
   const sideButtons: sideButtonsType = [
     {
       iconName: 'cards-heart',
@@ -51,17 +52,14 @@ export default function FeedItem() {
   return (
     <FeedItemContainer
       source={{
-        uri: 'https://cross-platform-rwa.rp.devfactory.com/images/3219%20-%20Protestants%20face%20nativists%20in%201800s.png',
+        uri: itemData.image,
       }}>
-      <QuestionText>
-        Which of the following groups was not a common target for nativists in
-        the 1800's?
-      </QuestionText>
+      <QuestionText>{itemData.question}</QuestionText>
       <SideButtonsContainer>
         <AvatarContainer>
           <AvatarImage
             source={{
-              uri: 'https://cross-platform-rwa.rp.devfactory.com/avatars/apush.png',
+              uri: itemData.user.avatar,
             }}
           />
           <PlusIcon name="plus-circle" size={18} color={theme.colors.green} />
@@ -75,13 +73,13 @@ export default function FeedItem() {
       </SideButtonsContainer>
       <AnswerOptions />
       <UsernameAndDescriptionContainer>
-        <UsernameText>AP US History</UsernameText>
-        <DescriptionText>5.4 The Compromise of 1850 #apush5_1</DescriptionText>
+        <UsernameText>{itemData.user.name}</UsernameText>
+        <DescriptionText>{itemData.description}</DescriptionText>
       </UsernameAndDescriptionContainer>
       <PlaylistContainer>
         <PlaylistInfoContainer>
           <Icon name="animation-play" color={theme.colors.white} size={15} />
-          <PlaylistText>SADJIASJDIOAJIDOJASIODJS</PlaylistText>
+          <PlaylistText>Playlist • Unit 5: {itemData.playlist}</PlaylistText>
         </PlaylistInfoContainer>
         <Icon name="chevron-right" color={theme.colors.white} size={19} />
       </PlaylistContainer>

@@ -1,9 +1,13 @@
 import styled from 'styled-components/native';
 import theme from '../../theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Dimensions} from 'react-native';
+
+const {height: screenHeight} = Dimensions.get('screen');
 
 export const FeedItemContainer = styled.ImageBackground`
-  flex: 1;
+  width: 100%;
+  height: ${screenHeight - 103}px;
 `;
 
 export const QuestionText = styled.Text`
