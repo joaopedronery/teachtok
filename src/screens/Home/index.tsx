@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Dimensions} from 'react-native';
+import {FlatList, Dimensions, Alert} from 'react-native';
 
 //Components
 import NavBar from '../../components/NavBar';
@@ -22,26 +22,38 @@ export default function Home() {
   const getForYouItems = async () => {
     if (nextForYouItemsPage.length === 0) {
       var forYouItemsList = [];
-      for (var i = 0; i < 3; i++) {
-        var data = await getForYou();
-        const correctAnswers = await getCorrectAnswer(data.id);
-        data = {...data, correct_options: correctAnswers.correct_options};
-        forYouItemsList.push(data);
+      try {
+        for (var i = 0; i < 3; i++) {
+          var data = await getForYou();
+          const correctAnswers = await getCorrectAnswer(data.id);
+          data = {...data, correct_options: correctAnswers.correct_options};
+          forYouItemsList.push(data);
+        }
+      } catch (error) {
+        Alert.alert(
+          'Error',
+          'An error ocurred while requesting questions data.',
+        );
       }
+
       setForYouItems(forYouItemsList);
     }
     getNextPage();
   };
 
   const getNextPage = async () => {
-    var nextForYouItemsList = [];
-    for (var i = 0; i < 3; i++) {
-      var data = await getForYou();
-      const correctAnswers = await getCorrectAnswer(data.id);
-      data = {...data, correct_options: correctAnswers.correct_options};
-      nextForYouItemsList.push(data);
+    try {
+      var nextForYouItemsList = [];
+      for (var i = 0; i < 3; i++) {
+        var data = await getForYou();
+        const correctAnswers = await getCorrectAnswer(data.id);
+        data = {...data, correct_options: correctAnswers.correct_options};
+        nextForYouItemsList.push(data);
+      }
+      setNextForYouItemsPage(nextForYouItemsList);
+    } catch (error) {
+      Alert.alert('Error', 'An error ocurred while requesting questions data');
     }
-    setNextForYouItemsPage(nextForYouItemsList);
   };
 
   useEffect(() => {
